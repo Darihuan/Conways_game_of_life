@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {interval, Observable, Subscription, timer} from "rxjs";
+import {Component} from '@angular/core';
+import {interval, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-tablero',
@@ -7,28 +7,25 @@ import {interval, Observable, Subscription, timer} from "rxjs";
   styleUrls: ['./tablero.component.css']
 })
 export class TableroComponent {
-  tabla: boolean[][] = new Array(20).fill(false).map(()=>Array(20).fill(false));
+  tamano = 35;
+  tabla: boolean[][] = new Array(35).fill(false).map(() => Array(this.tamano).fill(false));
   tablaCopy: boolean[][] = JSON.parse(JSON.stringify(this.tabla));
+  contador = interval(400);
+  subscripcion: Subscription = new Subscription();
 
 
   iteraciones: number = -1;
 
   constructor() {
-    console.log(this.tabla)
+
 
   }
 
 
-  setCelda(event: MouseEvent) {
-    let elementId: string = (event.target as Element).id;
-    let coordenadas = elementId.split("-")
-    let x = parseInt(coordenadas[0])
-    let y = parseInt(coordenadas[1])
+  setCelda(x: number, y: number) {
     this.tabla[x][y] = !this.tabla[x][y]
   }
 
-  contador = interval(500);
-  subscripcion: Subscription = new Subscription();
 
   runGame() {
 
@@ -78,37 +75,37 @@ export class TableroComponent {
   obtenerVecinos(i: number, j: number): number {
     let vecinos = 0;
     let vecinosPos: [number, number] = [-1, -1]
-    if (this.tablaCopy[this.calcularCoordenada(i - 1)][this.calcularCoordenada(j + 1)]) {
+    if (this.tablaCopy[this.calcularCoordenada(i - 1, "y")][this.calcularCoordenada(j + 1, "x")]) {
       vecinos++
       vecinosPos.push(i - 1, j + 1);
     }
 
-    if (this.tablaCopy[this.calcularCoordenada(i - 1)][this.calcularCoordenada(j - 1)]) {
+    if (this.tablaCopy[this.calcularCoordenada(i - 1, "y")][this.calcularCoordenada(j - 1, "x")]) {
       vecinos++
       vecinosPos.push(i - 1, j - 1);
     }
-    if (this.tablaCopy[this.calcularCoordenada(i - 1)][this.calcularCoordenada(j)]) {
+    if (this.tablaCopy[this.calcularCoordenada(i - 1, "y")][this.calcularCoordenada(j, "x")]) {
       vecinos++
       vecinosPos.push(i - 1, j);
     }
-    if (this.tablaCopy[this.calcularCoordenada(i)][this.calcularCoordenada(j - 1)]) {
+    if (this.tablaCopy[this.calcularCoordenada(i, "y")][this.calcularCoordenada(j - 1, "x")]) {
       vecinos++
       vecinosPos.push(i, j - 1);
     }
-    if (this.tablaCopy[this.calcularCoordenada(i)][this.calcularCoordenada(j + 1)]) {
+    if (this.tablaCopy[this.calcularCoordenada(i, "y")][this.calcularCoordenada(j + 1, "x")]) {
       vecinos++
       vecinosPos.push(i, j + 1);
     }
-    if (this.tablaCopy[this.calcularCoordenada(i + 1)][this.calcularCoordenada(j - 1)]) {
+    if (this.tablaCopy[this.calcularCoordenada(i + 1, "y")][this.calcularCoordenada(j - 1, "x")]) {
       vecinos++
       vecinosPos.push(i + 1, j - 1);
     }
-    if (this.tablaCopy[this.calcularCoordenada(i + 1)][this.calcularCoordenada(j)]) {
+    if (this.tablaCopy[this.calcularCoordenada(i + 1, "y")][this.calcularCoordenada(j, "x")]) {
       vecinos++
       vecinosPos.push(i + 1, j);
     }
 
-    if (this.tablaCopy[this.calcularCoordenada(i + 1)][this.calcularCoordenada(j + 1)]) {
+    if (this.tablaCopy[this.calcularCoordenada(i + 1, "y")][this.calcularCoordenada(j + 1, "x")]) {
       vecinos++
       vecinosPos.push(i + 1, j + 1);
     }
@@ -117,20 +114,29 @@ export class TableroComponent {
 
   }
 
-  calcularCoordenada(valor: number): number {
-
-    if (valor == -1) {
-      return 19;
-    } else if (valor == 20) {
-      return 0;
-    } else if (valor == 0) {
-      return 0;
+  calcularCoordenada(valor: number, eje: string): number {
+    if (eje == 'x') {
+      if (valor == -1) {
+        return this.tabla.length - 1;
+      } else if (valor == this.tabla.length) {
+        return 0;
+      } else {
+        return valor;
+      }
     } else {
-      return valor;
+      if (valor == -1) {
+        return 34;
+      } else if (valor == 35) {
+        return 0;
+      } else {
+        return valor;
+      }
     }
   }
 
   reset() {
-    this.tabla =  new Array(20).fill(false).map(()=>Array(20).fill(false));
+    this.tabla = new Array(35).fill(false).map(() => Array(this.tamano).fill(false));
   }
+
+
 }
