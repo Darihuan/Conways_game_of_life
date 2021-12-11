@@ -1,0 +1,6 @@
+.fondo{
+  @apply bg-green-400 border border-green-200
+}
+.stop {
+  @apply bg-red-500
+}
