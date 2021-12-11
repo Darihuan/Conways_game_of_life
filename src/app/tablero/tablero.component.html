@@ -1,25 +1,30 @@
-<div class="max-w-3xl mr-auto ml-auto mt-5">
-  <div class="flex" *ngFor="let fila of tabla let i =index">
-    <div *ngFor="let elemento of fila let j =index" >
-      <div class="border border-gray-300 h-5 w-5" [ngClass]="{fondo:fila[j]}"
-           (click)="setCelda(i,j)"></div>
+<div class="max-w-4xl mr-auto ml-auto mt-5">
+  <div class="flex flex-col justify-center items-center mx-auto">
+    <div class="flex" *ngFor="let fila of tabla let i =index">
+      <div *ngFor="let elemento of fila let j =index">
+        <div class="border border-gray-300 h-5 w-5" [ngClass]="{fondo:fila[j]}"
+             (click)="setCelda(i,j)"></div>
+      </div>
+    </div>
+
+    <div class="flex flex-col justify-center items-center">
+      <div
+        class="mt-5 shadow-lg  w-72 text-center rounded py-3 bg-purple-600 text-white font-sans font-regular text-xl cursor-pointer"
+        [ngClass]="{stop:iteraciones!=-1}"><span *ngIf="iteraciones==-1;else parar" (click)="runGame()"
+                                                 class="">Empezar</span>
+        <ng-template #parar><span (click)="stopGame()">Stop</span></ng-template>
+      </div>
+      <input type="range" min="35" max="100" value="35" class="slider"[(ngModel)]="tamano" (ngModelChange)="reset()" *ngIf="iteraciones==-1"  id="myRange" >
+      <div
+        class="mt-5 shadow-lg  w-24 text-center rounded py-3 bg-blue-300 text-white font-sans font-regular text-xl cursor-pointer"
+        (click)="reset()" *ngIf="iteraciones==-1">Reset
+      </div>
+      <h3 class="text-3xl font-semibold text-gray-700 text-center mt-5" *ngIf="iteraciones!=-1">Número de
+        generaciones {{iteraciones + 1}}</h3>
+
     </div>
   </div>
 
+</div>
 
-</div>
-<div
-  class="mt-5 shadow-lg  w-72 text-center rounded py-3 mx-auto bg-purple-600 text-white font-sans font-regular text-xl cursor-pointer"
-  [ngClass]="{stop:iteraciones!=-1}"><span *ngIf="iteraciones==-1;else parar" (click)="runGame()"
-                                           class="">Empezar</span>
-  <ng-template #parar><span (click)="stopGame()">Stop</span></ng-template>
-</div>
-<input type="range" min="35" max="100" [(ngModel)]="tamano" (ngModelChange)="reset()" *ngIf="iteraciones==-1"  >
-
-<div
-  class="mt-5 shadow-lg  w-24 text-center rounded py-3 mx-auto bg-blue-300 text-white font-sans font-regular text-xl cursor-pointer"
-  (click)="reset()" *ngIf="iteraciones==-1">Reset
-</div>
-<h3 class="text-3xl font-semibold text-gray-700 text-center mt-5" *ngIf="iteraciones!=-1">Número de
-  generaciones {{iteraciones + 1}}</h3>
 
