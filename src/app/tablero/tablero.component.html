@@ -1,4 +1,4 @@
-<div class="max-w-4xl mr-auto ml-auto mt-5">
+<div class="max-w-4xl mr-auto ml-auto mt-5 ">
   <div class="flex flex-col justify-center items-center mx-auto">
     <div class="flex" *ngFor="let fila of tabla let i =index">
       <div *ngFor="let elemento of fila let j =index">
@@ -14,7 +14,8 @@
                                                  class="">Empezar</span>
         <ng-template #parar><span (click)="stopGame()">Stop</span></ng-template>
       </div>
-      <input type="range" min="35" max="100" value="35" class="slider"[(ngModel)]="tamano" (ngModelChange)="reset()" *ngIf="iteraciones==-1"  id="myRange" >
+      <input type="range" min="35" max="100" value="35" class="slider" [(ngModel)]="tamano" (ngModelChange)="reset()"
+             *ngIf="iteraciones==-1" id="myRange">
       <div
         class="mt-5 shadow-lg  w-24 text-center rounded py-3 bg-blue-300 text-white font-sans font-regular text-xl cursor-pointer"
         (click)="reset()" *ngIf="iteraciones==-1">Reset
@@ -26,5 +27,7 @@
   </div>
 
 </div>
+
+
 
 
