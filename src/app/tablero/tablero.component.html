@@ -7,12 +7,12 @@
       </div>
     </div>
 
-    <div class="flex flex-col justify-center items-center">
+    <div class="flex flex-col justify-center items-center" >
       <div
         class="mt-5 shadow-lg  w-72 text-center rounded py-3 bg-purple-600 text-white font-sans font-regular text-xl cursor-pointer"
-        [ngClass]="{stop:iteraciones!=-1}"><span *ngIf="iteraciones==-1;else parar" (click)="runGame()"
+        [ngClass]="{stop:iteraciones!=-1}" (click)="(iteraciones)==-1?runGame():stopGame()"><span *ngIf="iteraciones==-1;else parar"
                                                  class="">Empezar</span>
-        <ng-template #parar><span (click)="stopGame()">Stop</span></ng-template>
+        <ng-template #parar><span >Stop</span></ng-template>
       </div>
       <input type="range" min="35" max="100" value="35" class="slider" [(ngModel)]="tamano" (ngModelChange)="reset()"
              *ngIf="iteraciones==-1" id="myRange">
